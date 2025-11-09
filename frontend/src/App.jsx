@@ -93,7 +93,17 @@ function App() {
 
       {activeModal === 'options' && <AddOptionsModal onClose={() => setActiveModal(null)} onSelectOption={setActiveModal} />}
       {activeModal === 'manual' && <AddFoodModal onClose={() => setActiveModal(null)} onAddFood={handleAddFood} />}
-      {activeModal === 'upload' && <ImageUploadModal onClose={() => setActiveModal(null)} onAnalysisComplete={(data, preview) => { setAnalysisData(data); setImagePreview(preview); setActiveModal(null); }} />}
+      {(activeModal === 'upload' || activeModal === 'camera') && (
+        <ImageUploadModal
+          mode={activeModal}
+          onClose={() => setActiveModal(null)}
+          onAnalysisComplete={(data, preview) => {
+            setAnalysisData(data);
+            setImagePreview(preview);
+            setActiveModal(null);
+          }}
+        />
+      )}
 
       <PwaUpdater /> {/* Tambahkan komponen PWA di sini */}
     </div>

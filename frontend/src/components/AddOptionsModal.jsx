@@ -8,15 +8,20 @@ const AddOptionsModal = ({ onClose, onSelectOption }) => {
         <h2>Tambah Makanan</h2>
         <p>Pilih salah satu cara untuk menambahkan makanan Anda.</p>
         <div className="options-buttons">
+          <button className="option-btn" onClick={() => onSelectOption('camera')}>
+            <span className="icon">📸</span>
+            <h3>Ambil dari Kamera</h3>
+            <p>Gunakan kamera untuk foto baru</p>
+          </button>
           <button className="option-btn" onClick={() => onSelectOption('upload')}>
-            <span className="icon">📷</span>
-            <h3>Unggah Foto</h3>
-            <p>Analisis nutrisi dari gambar</p>
+            <span className="icon">🖼️</span>
+            <h3>Upload dari Galeri</h3>
+            <p>Pilih gambar dari galeri Anda</p>
           </button>
           <button className="option-btn" onClick={() => onSelectOption('manual')}>
             <span className="icon">✏️</span>
             <h3>Input Manual</h3>
-            <p>Masukkan data kalori & protein</p>
+            <p>Masukkan data secara manual</p>
           </button>
         </div>
         <button className="btn-cancel" onClick={onClose}>Batal</button>

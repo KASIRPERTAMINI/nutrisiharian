@@ -1,24 +1,22 @@
 .app-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 2rem;
+  align-items: center;
+  padding: 1.5rem 2rem;
   background-color: var(--background-primary);
 }
 
-.greeting h1 {
+.header-left h1 {
   margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
-.greeting p {
-  margin: 0;
+.header-left p {
+  margin: 0.25rem 0 0;
   color: var(--text-secondary);
-}
-
-.date-time {
-  text-align: right;
+  font-size: 0.9rem;
 }
 
 .header-right {
@@ -27,27 +25,40 @@
   gap: 1.5rem;
 }
 
-.settings-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: transform 0.2s;
-}
-
-.settings-btn:hover {
-  transform: rotate(45deg);
+.date-time {
+  text-align: right;
 }
 
 .date-time .time {
-  font-size: 2rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 600;
   margin: 0;
+  color: var(--text-primary);
 }
 
 .date-time .date {
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   margin: 0;
+}
+
+.settings-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-btn svg {
+  width: 24px;
+  height: 24px;
+  transition: color 0.2s ease;
+}
+
+.settings-btn:hover {
+  color: var(--accent-color);
 }

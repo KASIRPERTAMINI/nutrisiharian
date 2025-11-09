@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './ImageUploadModal.css';
 
 const getApiUrl = (path) => `${import.meta.env.VITE_API_URL}${path}`;
 
-const ImageUploadModal = ({ onClose, onAnalysisComplete }) => {
+const ImageUploadModal = ({ onClose, onAnalysisComplete, mode }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [foodDescription, setFoodDescription] = useState('');
+  const fileInputRef = useRef(null);
+
+  const isCameraMode = mode === 'camera';
+
+  useEffect(() => {
+    // Secara otomatis memicu input file saat komponen dimuat
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  }, []);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -16,10 +26,12 @@ const ImageUploadModal = ({ onClose, onAnalysisComplete }) => {
       setSelectedFile(file);
       setPreview(URL.createObjectURL(file));
       setError('');
-    } else {
-      setSelectedFile(null);
-      setPreview(null);
+    } else if (file) {
       setError('Silakan pilih file gambar yang valid.');
+    }
+    // Jika tidak ada file yang dipilih (misalnya pengguna membatalkan), tutup modal
+    if (!file) {
+      onClose();
     }
   };
 
@@ -36,15 +48,11 @@ const ImageUploadModal = ({ onClose, onAnalysisComplete }) => {
         method: 'POST',
         body: formData,
       });
-
-      if (!response.ok) {
-        throw new Error('Gagal menganalisis gambar.');
-      }
-
+      if (!response.ok) throw new Error(`Error ${response.status}: ${await response.text()}`);
       const result = await response.json();
       onAnalysisComplete(result, preview);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Gagal menganalisis gambar.');
     } finally {
       setIsLoading(false);
     }
@@ -53,52 +61,50 @@ const ImageUploadModal = ({ onClose, onAnalysisComplete }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content upload-modal" onClick={(e) => e.stopPropagation()}>
-        <h2>Unggah Foto Makanan</h2>
+        <h2>{isCameraMode ? 'Ambil Foto Makanan' : 'Unggah dari Galeri'}</h2>
 
         {isLoading ? (
-          <div className="loading-container">
-            <div className="spinner"></div>
-            <p>Menganalisis makanan Anda...</p>
-          </div>
+          <div className="loading-container"><div className="spinner"></div><p>Menganalisis...</p></div>
         ) : (
           <>
             {preview && (
-              <div className="image-preview">
-                <img src={preview} alt="Pratinjau Makanan" />
-              </div>
+              <div className="image-preview"><img src={preview} alt="Pratinjau Makanan" /></div>
             )}
 
-            <div className="form-group">
-              <label htmlFor="food-image-input" className="file-label">
-                {selectedFile ? 'Ganti Gambar' : 'Pilih Gambar'}
-              </label>
-              <input
-                id="food-image-input"
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
-            </div>
+            <input
+              ref={fileInputRef}
+              id="food-image-input"
+              type="file"
+              accept="image/*"
+              capture={isCameraMode ? 'environment' : undefined}
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
 
-            <div className="form-group">
-                <label htmlFor="foodDescription">Keterangan Makanan (Opsional)</label>
-                <input
-                type="text"
-                id="foodDescription"
-                placeholder="cth: nasi, ayam, sayur"
-                value={foodDescription}
-                onChange={(e) => setFoodDescription(e.target.value)}
-                />
-            </div>
+            {!selectedFile && <p>Menunggu gambar...</p>}
+
+            {selectedFile && (
+              <>
+                <div className="form-group">
+                  <label htmlFor="foodDescription">Keterangan Tambahan (Opsional)</label>
+                  <input
+                    type="text"
+                    id="foodDescription"
+                    placeholder="Contoh: Dada ayam, tanpa kulit"
+                    value={foodDescription}
+                    onChange={(e) => setFoodDescription(e.target.value)}
+                  />
+                </div>
+                <div className="form-actions">
+                  <button type="button" className="btn-cancel" onClick={() => fileInputRef.current.click()}>Ambil Ulang</button>
+                  <button type="button" className="btn-submit" onClick={handleUpload}>Analisis</button>
+                </div>
+              </>
+            )}
 
             {error && <p className="error-message">{error}</p>}
 
-            <div className="form-actions">
-              <button type="button" className="btn-cancel" onClick={onClose}>Batal</button>
-              <button type="button" className="btn-submit" onClick={handleUpload} disabled={!selectedFile}>
-                Analisis
-              </button>
-            </div>
+            <button className="btn-close-absolute" onClick={onClose}>×</button>
           </>
         )}
       </div>
