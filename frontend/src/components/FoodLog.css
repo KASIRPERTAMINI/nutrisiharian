@@ -1,0 +1,71 @@
+.food-log-section {
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.food-log-section h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.log-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.food-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-secondary);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.food-card.new-item {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.food-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.food-info p {
+  margin: 0.25rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.food-nutrition {
+  text-align: right;
+}
+
+.food-nutrition p {
+  margin: 0.2rem 0;
+  font-size: 1rem;
+}
+
+.food-nutrition strong {
+  color: var(--accent-color);
+}
+
+.empty-log-message {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 2rem;
+}

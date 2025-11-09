@@ -1,0 +1,33 @@
+.summary-section {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 2rem;
+}
+
+.progress-card {
+  background-color: var(--background-secondary);
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.progress-circle-container {
+  width: 150px;
+  margin: 0 auto;
+}
+
+.target-text {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  color: var(--text-secondary);
+}

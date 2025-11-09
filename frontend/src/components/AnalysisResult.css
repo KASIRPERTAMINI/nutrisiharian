@@ -1,0 +1,96 @@
+.analysis-container {
+  padding: 2rem;
+  animation: fade-in 0.5s ease-out;
+}
+
+.analysis-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.result-content {
+  display: flex;
+  gap: 2rem;
+  background-color: var(--background-secondary);
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+.result-image {
+  flex: 1;
+}
+
+.result-image img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.result-details {
+  flex: 1.5;
+}
+
+.result-details h3 {
+  margin-top: 0;
+  color: var(--accent-color);
+}
+
+.result-details ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.result-details li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #333;
+}
+
+.result-total {
+  text-align: right;
+}
+
+.result-total h3 {
+  margin-bottom: 0.5rem;
+}
+
+.result-total p {
+  margin: 0.2rem 0;
+  font-size: 1.2rem;
+}
+
+.result-total strong {
+  color: var(--text-primary);
+}
+
+.result-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Duplikasi gaya tombol dari modal untuk konsistensi */
+.result-actions button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.result-actions .btn-cancel {
+  background-color: transparent;
+  border: 1px solid #444;
+  color: var(--text-secondary);
+}
+
+.result-actions .btn-submit {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --background-primary: #121212;
+  --background-secondary: #1E1E1E;
+  --accent-color: #1ABC9C; /* Hijau Mint */
+  --text-primary: #E0E0E0;
+  --text-secondary: #A0A0A0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}

@@ -1,0 +1,22 @@
+.add-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: #fff;
+  font-size: 2.5rem;
+  line-height: 55px; /* Vertically center the '+' */
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out, background-color 0.2s;
+}
+
+.add-button:hover {
+  transform: scale(1.1);
+  background-color: #17a78a; /* Slightly darker shade of mint */
+}
