@@ -1,0 +1,58 @@
+.options-modal {
+  text-align: center;
+}
+
+.options-modal p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.options-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.option-btn {
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-primary);
+  width: 100%;
+}
+
+.option-btn:hover {
+  background-color: #444;
+  transform: translateY(-2px);
+}
+
+.option-btn .icon {
+  font-size: 2rem;
+}
+
+.option-btn h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.option-btn p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.btn-cancel {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
