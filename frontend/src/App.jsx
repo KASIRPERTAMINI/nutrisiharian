@@ -9,6 +9,10 @@ import AddOptionsModal from './components/AddOptionsModal';
 import ImageUploadModal from './components/ImageUploadModal';
 import AnalysisResult from './components/AnalysisResult';
 import SettingsPage from './components/SettingsPage';
+import PwaUpdater from './components/PwaUpdater'; // Impor komponen PWA
+
+// Fungsi pembantu untuk mendapatkan URL API
+const getApiUrl = (path) => `${import.meta.env.VITE_API_URL}${path}`;
 
 function App() {
   const [foodLog, setFoodLog] = useState([]);
@@ -21,8 +25,8 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
 
   const fetchData = () => {
-    fetch('/api/log/today').then(res => res.json()).then(data => setFoodLog(data.map(item => ({...item, isNew: false}))));
-    fetch('/api/targets').then(res => res.json()).then(setTargets);
+    fetch(getApiUrl('/api/log/today')).then(res => res.json()).then(data => setFoodLog(data.map(item => ({...item, isNew: false}))));
+    fetch(getApiUrl('/api/targets')).then(res => res.json()).then(setTargets);
   };
 
   useEffect(() => { fetchData(); }, []);
@@ -41,7 +45,7 @@ function App() {
   };
 
   const handleAddFood = (newFood) => {
-    fetch('/api/food/manual', {
+    fetch(getApiUrl('/api/food/manual'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newFood),
@@ -52,9 +56,8 @@ function App() {
   };
 
   const handleConfirmAnalysis = (newItems) => {
-    // Di aplikasi nyata, ini idealnya akan menjadi satu transaksi batch ke backend
     newItems.forEach(item => {
-      fetch('/api/food/manual', {
+      fetch(getApiUrl('/api/food/manual'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(item),
@@ -63,15 +66,15 @@ function App() {
       });
     });
     setAnalysisData(null);
-    setTimeout(fetchData, 500); // Refresh data
+    setTimeout(fetchData, 500);
   };
 
   const handleResetData = () => {
-    fetch('/api/reset', { method: 'DELETE' })
+    fetch(getApiUrl('/api/reset'), { method: 'DELETE' })
       .then(res => res.json())
       .then(() => {
-        fetchData(); // Ambil ulang data yang sudah direset (log kosong, target default)
-        setShowSettings(false); // Kembali ke dasbor
+        fetchData();
+        setShowSettings(false);
       });
   };
 
@@ -91,6 +94,8 @@ function App() {
       {activeModal === 'options' && <AddOptionsModal onClose={() => setActiveModal(null)} onSelectOption={setActiveModal} />}
       {activeModal === 'manual' && <AddFoodModal onClose={() => setActiveModal(null)} onAddFood={handleAddFood} />}
       {activeModal === 'upload' && <ImageUploadModal onClose={() => setActiveModal(null)} onAnalysisComplete={(data, preview) => { setAnalysisData(data); setImagePreview(preview); setActiveModal(null); }} />}
+
+      <PwaUpdater /> {/* Tambahkan komponen PWA di sini */}
     </div>
   );
 }

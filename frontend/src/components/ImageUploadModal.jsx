@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './ImageUploadModal.css';
 
+const getApiUrl = (path) => `${import.meta.env.VITE_API_URL}${path}`;
+
 const ImageUploadModal = ({ onClose, onAnalysisComplete }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -27,10 +29,10 @@ const ImageUploadModal = ({ onClose, onAnalysisComplete }) => {
 
     const formData = new FormData();
     formData.append('foodImage', selectedFile);
-    formData.append('description', foodDescription); // Tambahkan deskripsi opsional
+    formData.append('description', foodDescription);
 
     try {
-      const response = await fetch('/api/food/analyze', {
+      const response = await fetch(getApiUrl('/api/food/analyze'), {
         method: 'POST',
         body: formData,
       });
@@ -40,7 +42,7 @@ const ImageUploadModal = ({ onClose, onAnalysisComplete }) => {
       }
 
       const result = await response.json();
-      onAnalysisComplete(result, preview); // Kirim hasil dan pratinjau ke App
+      onAnalysisComplete(result, preview);
     } catch (err) {
       setError(err.message);
     } finally {
